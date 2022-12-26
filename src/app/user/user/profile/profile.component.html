@@ -1,0 +1,24 @@
+<div *ngIf="isUserDataLoaded" class="user-profile">
+
+  <h1>Профиль</h1>
+  <div style="text-align: right">
+    <button mat-flat-button color="primary" (click)="openEditDialog()">Изменить профиль</button>
+  </div>
+
+  <div style="padding-top: 2rem" class="row">
+    <div class="col" style="text-align: left">
+
+      <h2>Логин: {{user.username}}</h2>
+
+      <h3 style="font-style: italic">Имя: {{user.firstname}} {{user.lastname}}</h3>
+      <p>email: {{user.email}}</p>
+      <p>Биография: {{user.bio}}</p>
+    </div>
+
+    <mat-divider style="margin: 2rem 0"></mat-divider>
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+</div>
