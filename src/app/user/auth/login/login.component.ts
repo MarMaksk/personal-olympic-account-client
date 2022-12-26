@@ -32,8 +32,10 @@ export class LoginComponent implements OnInit {
 
   createLoginForm(): FormGroup {
     return this.formBuilder.group({
-      username: ['', Validators.compose([Validators.required])],
-      password: ['', Validators.compose([Validators.required])],
+      username: ['', Validators.compose([Validators.required,
+        Validators.pattern('[a-zA-Z1-9]{4,7}')])],
+      password: ['', Validators.compose([Validators.required,
+        Validators.pattern('[a-zA-Z1-9]{4,16}')])]
     })
   }
 
@@ -45,7 +47,7 @@ export class LoginComponent implements OnInit {
       this.tokeStorage.saveToken(data.token)
       this.tokeStorage.saveUser(data)
       this.tokeStorage.saveRoles(data.roles)
-      this.notificationService.showSnackBar("Successfully logged in")
+      this.notificationService.showSnackBar("Авторизация прошла успешно")
       this.router.navigate(['/main'])
       window.location.reload();
     }, error => {

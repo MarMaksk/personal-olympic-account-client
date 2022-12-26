@@ -1,13 +1,13 @@
 <mat-toolbar color="primary">
-  <span routerLink="/main" style="cursor: pointer;margin-left: 20px;">Какие-то авиалинии</span>
+  <span routerLink="/main" style="cursor: pointer;margin-left: 20px;">Личный кабинет олимпиадника</span>
 
   <span class="spacer"></span>
 
   <button *ngIf="!isLoggedIn" matTooltip="Login" routerLink="/login" mat-icon-button class="example-icon favorite-icon">
     <mat-icon>login</mat-icon>
   </button>
-  <div *ngxPermissionsOnly="['ROLE_USER','ROLE_MANAGER', 'ROLE_SYSTEM', 'ROLE_DISPATCHER','ROLE_MAINTENANCE']">
-    <span *ngxPermissionsExcept="['ROLE_DISPATCHER']">
+  <div>
+    <span>
     <button *ngIf="isLoggedIn" routerLink="/flights" mat-icon-button class="example-icon favorite-icon">
       <mat-icon>send</mat-icon>
     </button>
@@ -23,7 +23,7 @@
       <mat-icon>build</mat-icon>
     </button>
   </div>
-  <div *ngxPermissionsOnly="['ROLE_SYSTEM', 'ROLE_CATERER','ROLE_DELIVERY']">
+  <div>
     <button *ngIf="isLoggedIn" routerLink="/catering" mat-icon-button class="example-icon favorite-icon">
       <mat-icon>chrome_reader_mode</mat-icon>
     </button>

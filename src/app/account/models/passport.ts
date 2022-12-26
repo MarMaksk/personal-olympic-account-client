@@ -1,5 +1,5 @@
 export interface Passport {
-  id: number,
+  id?: number,
   series: string,
   number: string,
   identityNumber: string

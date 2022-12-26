@@ -14,11 +14,6 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatNativeDateModule,
-  NgxMatTimepickerModule
-} from "@angular-material-components/datetime-picker";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatTableModule} from "@angular/material/table";
 import {MatTabsModule} from "@angular/material/tabs";
@@ -50,9 +45,6 @@ import {MatRadioModule} from "@angular/material/radio";
     MatProgressBarModule,
     MatSelectModule,
     MatDatepickerModule,
-    NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule,
-    NgxMatTimepickerModule,
     MatAutocompleteModule,
     MatTableModule,
     MatTabsModule,

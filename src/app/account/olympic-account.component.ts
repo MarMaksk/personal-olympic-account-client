@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'flight-comp',
-  templateUrl: './flight-order.component.html'
+  templateUrl: './olympic-account.component.html'
 })
-export class FlightOrderComponent {
+export class OlympicAccountComponent {
   title = 'avie-project-client';
 }
 

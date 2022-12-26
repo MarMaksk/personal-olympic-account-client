@@ -1,19 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {NotificationService} from "../../../user/service/notification.service";
-import {AirplaneService} from "../../service/airplane.service";
-import {Airplane} from "../../models/airplane";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {AddAirplaneComponent} from "./add-airplane/add-airplane.component";
-import {PageEvent} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {AddExaminationComponent} from "./add-examination/add-examination.component";
 import {TokenStorageService} from "../../../user/service/token-storage.service";
+import {ParticipantService} from "../../service/participant.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Address} from "../../models/address";
+import {Participant} from "../../models/participant";
+import {Passport} from "../../models/passport";
 
 @Component({
-  selector: 'app-airplans',
-  templateUrl: './airplane.component.html',
-  styleUrls: ['./airplane.component.css'],
+  templateUrl: './personal-data.component.html',
+  styleUrls: ['./personal-data.component.css'],
   animations: [trigger('detailExpand', [state('collapsed', style({
     height: '0px',
     minHeight: '0'
@@ -22,74 +19,109 @@ import {TokenStorageService} from "../../../user/service/token-storage.service";
     transition('expanded <=> collapsed',
       animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),]),],
 })
-export class AirplaneComponent implements OnInit {
+export class PersonalDataComponent implements OnInit {
 
-  airplane: Airplane[] | any;
-  displayedColumns: string[] | any
-  page: number = 0;
-  size: number = 4;
-  totalCount: number = 0;
   isDataLoaded = false;
-  currentSort = {
-    active: 'model',
-    direction: 'asc'
-  }
+
+  address: Address | any
+  participant: Participant | any
+  passport: Passport | any
+
+  public participantForm: FormGroup | any;
+  public addressForm: FormGroup | any;
+  public passportForm: FormGroup | any;
+  public policy = false;
+  public dataProcessing = false;
 
   constructor(private notification: NotificationService,
-              private airplaneService: AirplaneService,
-              private dialog: MatDialog,
-              private storage: TokenStorageService) {
+              private participantService: ParticipantService,
+              private fb: FormBuilder,
+              private tokenService: TokenStorageService) {
   }
 
   ngOnInit(): void {
-    if (this.storage.getRoles().indexOf("ROLE_MAINTENANCE") != -1 ||
-      this.storage.getRoles().indexOf("ROLE_SYSTEM") != -1) {
-      this.displayedColumns = ['icaoCode', 'model', 'loadCapacity', 'examination'];
-    } else
-      this.displayedColumns = ['icaoCode', 'model', 'loadCapacity'];
-    this.refresh()
+    this.addressForm = this.createAddressForm()
+    this.participantForm = this.createParticipantForm()
+    this.passportForm = this.createPassportForm()
   }
 
-  refresh() {
-    this.refreshAirplanesTable(this.page, this.size);
+  formsValid(): boolean {
+    return !!(this.addressForm.invalid || this.participantForm.invalid || this.passportForm.invalid || !this.policy
+    || !this.dataProcessing);
+
+}
+
+  createParticipantForm(): FormGroup {
+    return this.fb.group({
+        secondName: ['', Validators.compose([Validators.required])],
+        firstName: ['', Validators.compose([Validators.required])],
+        lastName: ['', Validators.compose([Validators.required])],
+        birthday: ['', Validators.compose([Validators.required])],
+        number: ['', Validators.compose([Validators.required,
+          Validators.pattern('^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$')])],
+        email: ['', Validators.compose([Validators.email])],
+      }
+    )
   }
 
-  loadAirplanes(event: PageEvent): PageEvent {
-    this.page = event.pageIndex;
-    this.size = event.pageSize;
-
-    this.refreshAirplanesTable(this.page, this.size);
-    return event;
+  createAddressForm(): FormGroup {
+    return this.fb.group({
+        area: ['', Validators.compose([Validators.required])],
+        district: ['', Validators.compose([Validators.required])],
+        locality: ['', Validators.compose([Validators.required])],
+        street: ['', Validators.compose([Validators.required])],
+        house: ['', Validators.compose([Validators.required])],
+        corps: ['', Validators.compose([Validators.required])],
+        flat: ['', Validators.compose([Validators.required])],
+        educationalInstitution: ['', Validators.compose([Validators.required])]
+      }
+    )
   }
 
-  applySort(sort: MatSort | any) {
-    this.currentSort = sort
-    this.refreshAirplanesTable(this.page, this.size);
+  createPassportForm(): FormGroup {
+    return this.fb.group({
+        series: ['', Validators.compose([Validators.required,
+          Validators.pattern('[A-Z]{2}')])],
+        number: ['', Validators.compose([Validators.required,
+          Validators.pattern('[0-9]{7}')])],
+        identityNumber: ['', Validators.compose([Validators.required,
+          Validators.pattern('[A-Z0-9]{14}')])]
+      }
+    )
   }
 
-  private refreshAirplanesTable(page: number, size: number): void {
-    this.airplane = [];
-    this.airplaneService.findAllWithPagination(this.currentSort.active, this.currentSort.direction, size, page)
-      .subscribe(data => {
-        this.totalCount = data.totalElements
-        this.airplane = data.content;
-        this.isDataLoaded = true;
-      }, error => this.notification.showSnackBar("При получении самолётов произошла ошибка"))
-  }
-
-  addAirplane(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '400px'
-    this.dialog.open(AddAirplaneComponent, dialogConfig)
-  }
-
-  addExamination(airplane: Airplane): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '400px'
-    dialogConfig.data = {
-      airplane: airplane
+  submit(): void {
+    this.address = {
+      area: this.addressForm.value.area,
+      district: this.addressForm.value.district,
+      locality: this.addressForm.value.locality,
+      street: this.addressForm.value.street,
+      house: this.addressForm.value.house,
+      corps: this.addressForm.value.corps,
+      flat: this.addressForm.value.flat
     }
-    this.dialog.open(AddExaminationComponent, dialogConfig)
+    this.passport = {
+      series: this.passportForm.value.series,
+      number: this.passportForm.value.number,
+      identityNumber: this.passportForm.value.identityNumber
+    }
+    this.participant = {
+      person: {
+        firstName: this.participantForm.value.firstName,
+        secondName: this.participantForm.value.secondName,
+        lastName: this.participantForm.value.lastName,
+        passport: this.passport,
+        number: this.participantForm.value.number
+      },
+      birthday: this.participantForm.value.birthday,
+      address: this.address,
+      email: this.participantForm.value.email,
+      educationalInstitution: this.addressForm.value.educationalInstitution,
+    }
+    this.participantService.create(this.participant)
+      .subscribe(() => {
+        },
+        error => this.notification.showSnackBar("Произошла ошибка при сохранении данных"))
+    this.tokenService.saveEmail(this.participantForm.value.email)
   }
-
 }

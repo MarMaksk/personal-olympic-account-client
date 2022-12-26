@@ -1,6 +1,6 @@
 import {Passport} from "./passport";
 
-export interface Person {
+export interface PersonDTO {
   id?: number,
   firstName: string,
   secondName: string,

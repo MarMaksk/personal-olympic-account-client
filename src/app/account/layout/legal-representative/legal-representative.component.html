@@ -1,50 +1,82 @@
-<br>
-<div class="container">
-  <div class="fixed"><h1>Самолёты</h1></div>
-  <div class="rubbery" *ngxPermissionsOnly="['ROLE_MANAGER', 'ROLE_SYSTEM']">
-    <button mat-flat-button color="primary" (click)="addAirplane()">Добавить самолёт</button>
+<div class="inner">
+  <div>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>ФИО/Дата рождения/Телефон/Email</mat-card-title>
+        <mat-card-subtitle>Заполните все поля, чтобы перейти к дальнейшему шагу вашей регистрации.
+          <form [formGroup]="personForm">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Фамилия</mat-label>
+              <input type="text" class="input" matInput formControlName="secondName">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Имя</mat-label>
+              <input type="text" class="input" matInput formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Отчество</mat-label>
+              <input type="text" matInput formControlName="lastName">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Номер телефона</mat-label>
+              <input type="text" class="input" matInput formControlName="number">
+            </mat-form-field>
+          </form>
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+    <br>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Паспортные данные (только латиница)</mat-card-title>
+        <mat-card-subtitle>
+          <form [formGroup]="passportForm">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Серия</mat-label>
+              <input type="text" class="input" matInput formControlName="series">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Номер</mat-label>
+              <input type="number" class="input" matInput formControlName="number">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Индентификационный номер</mat-label>
+              <input type="text" matInput formControlName="identityNumber">
+            </mat-form-field>
+          </form>
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+    <br/>
+    <div class="row">
+      <mat-card class="policy">
+        <mat-card-header>
+          <mat-card-title>Обработка ваших данных</mat-card-title>
+          <mat-card-subtitle>При создании учётной записи вы даёте согласие с нашими правилами
+            и условиями пользования веб-сервисом
+            <div>
+              <section class="left">
+                <mat-checkbox [(ngModel)]="policy">Политика конфиденциальности</mat-checkbox>
+              </section>
+              <section class="left">
+                <mat-checkbox [(ngModel)]="dataProcessing">Обработка данных в соответствии с
+                  законом о персональных данных
+                  от 7 мая 2021 г. № 99-3
+                </mat-checkbox>
+              </section>
+            </div>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <div class="center">
+            <button mat-fab extended color="primary" class="w-50" [disabled]="formsValid()" (click)="submit()"
+                    routerLink="/legal-representative"
+                    disableRipple>
+              Добавить
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
-  <button mat-button (click)="refresh()">
-    <mat-icon>refresh</mat-icon>
-  </button>
-</div>
-
-<div>
-  <mat-divider style="margin-top: 20px; margin-bottom: 20px;"></mat-divider>
-
-  <table mat-table [dataSource]="airplane" class="mat-elevation-z8"
-         matSort matSortActive="icaoCode, model, loadCapacity"
-         matSortDisableClear matSortDirection="desc"
-         (matSortChange)="applySort($event)">
-    <ng-container matColumnDef="model">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Модель</th>
-      <td mat-cell *matCellDef="let air"> {{air.model}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="icaoCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> ICAO код</th>
-      <td mat-cell *matCellDef="let air"> {{air.icaoCode}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="loadCapacity">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Число мест</th>
-      <td mat-cell *matCellDef="let air">{{air.loadCapacity}}</td>
-    </ng-container>
-    <ng-container matColumnDef="examination">
-      <th mat-header-cell *matHeaderCellDef> Добавить проверку</th>
-      <button mat-cell *matCellDef="let element" mat-raised-button color="primary" (click)="addExamination(element)">
-        Knock
-      </button>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  <mat-paginator
-    class="paginator"
-    [length]="totalCount"
-    [pageIndex]="page"
-    [pageSize]="size"
-    [pageSizeOptions]="[1, 4, 5, 6]"
-    (page)="loadAirplanes($event)"
-  ></mat-paginator>
 </div>

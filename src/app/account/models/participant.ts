@@ -1,14 +1,14 @@
-import {Person} from "./Person";
-import {Address} from "./Address";
-import {Specialization} from "./Specialization";
+import {PersonDTO} from "./personDTO";
+import {Address} from "./address";
+import {Specialization} from "./specialization";
 
 export interface Participant {
-  id: string;
-  person: Person;
+  id?: string;
+  person: PersonDTO;
   birthday: Date;
   address: Address;
   email: string;
   educationalInstitution: string;
-  legalRepresentative: Person;
-  specializations: Specialization[];
+  legalRepresentative?: PersonDTO;
+  specializations?: Specialization[];
 }

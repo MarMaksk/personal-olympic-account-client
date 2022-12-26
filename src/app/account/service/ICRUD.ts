@@ -4,7 +4,7 @@ export interface ICRUD<F> {
 
   API: string;
 
-  create(entity: F): Observable<F>;
+  create(entity: F, any?: any): Observable<F>;
 
   update(entity: F): Observable<F>;
 

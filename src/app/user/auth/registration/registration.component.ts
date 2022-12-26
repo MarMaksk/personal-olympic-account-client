@@ -32,11 +32,12 @@ export class RegistrationComponent implements OnInit {
 
   private createRegisterForm() {
     return this.formBuilder.group({
-      username: ['', Validators.compose([Validators.required])],
-      firstname: ['', Validators.compose([Validators.required])],
-      lastname: ['', Validators.compose([Validators.required])],
-      password: ['', Validators.compose([Validators.required])],
-      confirmPassword: ['', Validators.compose([Validators.required])],
+      username: ['', Validators.compose([Validators.required,
+        Validators.pattern('[a-zA-Z1-9]{4,7}')])],
+      password: ['', Validators.compose([Validators.required,
+        Validators.pattern('[a-zA-Z1-9]{4,16}')])],
+      confirmPassword: ['', Validators.compose([Validators.required,
+        Validators.pattern('[a-zA-Z1-9]{4,16}')])],
     })
   }
 
@@ -44,14 +45,12 @@ export class RegistrationComponent implements OnInit {
     this.authService.register({
       username: this.registerForm.value.username,
       password: this.registerForm.value.password,
-      firstname: this.registerForm.value.firstname,
-      lastname: this.registerForm.value.lastname,
       confirmPassword: this.registerForm.value.confirmPassword
     }).subscribe(data => {
       this.tokeStorage.saveToken(data.token)
       this.tokeStorage.saveUser(data)
       this.tokeStorage.saveRoles(data.roles)
-      this.notificationService.showSnackBar("Successfully logged in")
+      this.notificationService.showSnackBar("Регистрация прошла успешно")
       this.router.navigate(['/main'])
       window.location.reload();
     }, error => {

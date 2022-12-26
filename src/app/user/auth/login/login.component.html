@@ -1,28 +1,29 @@
 <div class="login-page">
-  <h2>Login</h2>
+  <h2>Вход в личный кабинет</h2>
   <form [formGroup]="loginForm">
     <div class="justify-content-center">
       <div>
         <mat-form-field appearance="outline">
-          <mat-label>username</mat-label>
-          <input matInput formControlName="username" class="">
+          <mat-label>Ваш логин</mat-label>
+          <input matInput
+                 formControlName="username">
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="outline">
-          <mat-label>password</mat-label>
+          <mat-label>Ваш пароль</mat-label>
           <input matInput formControlName="password" type="password">
         </mat-form-field>
       </div>
       <div id="controls" class="row">
         <button style="width: 20%" [disabled]="loginForm.invalid" (click)="submit()" mat-flat-button color="primary">
-          Login
+          Войти
         </button>
         <br>
         <br>
         <br>
-        <button style="width: 20%" routerLink="/register" mat-stroked-button color="primary">
-          Register
+        <button style="width: 40%" routerLink="/register" mat-stroked-button color="primary">
+          Регистрация
         </button>
       </div>
     </div>

@@ -1,0 +1,30 @@
+.inner {
+  padding: 5% 0 5% 0;
+  width: 40%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.policy {
+  padding: 5% 0 5% 0;
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  margin: 0% 35%;
+}
+
+.min {
+  width: 70px;
+}
+
+mat-form-field {
+  padding: 1% 2%;
+  width: 29%;
+}
