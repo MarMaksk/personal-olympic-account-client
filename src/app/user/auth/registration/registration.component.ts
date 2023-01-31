@@ -49,6 +49,7 @@ export class RegistrationComponent implements OnInit {
     }).subscribe(data => {
       this.tokeStorage.saveToken(data.token)
       this.tokeStorage.saveUser(data)
+      this.tokeStorage.saveId(data.id)
       this.tokeStorage.saveRoles(data.roles)
       this.notificationService.showSnackBar("Регистрация прошла успешно")
       this.router.navigate(['/main'])

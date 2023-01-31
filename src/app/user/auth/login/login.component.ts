@@ -46,6 +46,8 @@ export class LoginComponent implements OnInit {
     }).subscribe(data => {
       this.tokeStorage.saveToken(data.token)
       this.tokeStorage.saveUser(data)
+      console.log(data)
+      this.tokeStorage.saveId(data.id)
       this.tokeStorage.saveRoles(data.roles)
       this.notificationService.showSnackBar("Авторизация прошла успешно")
       this.router.navigate(['/main'])

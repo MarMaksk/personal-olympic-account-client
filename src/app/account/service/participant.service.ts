@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {Participant} from "../models/participant";
 import {PersonDTO} from "../models/personDTO";
 import {TokenStorageService} from "../../user/service/token-storage.service";
+import {Specialization} from "../models/specialization";
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,12 @@ export class ParticipantService implements ICRUD<Participant> {
               private tokenService: TokenStorageService) {
   }
 
-  create(entity: Participant): Observable<Participant> {
-    return this.http.post<Participant>(this.API, entity);
+  create(entity: Participant): Observable<string> {
+    return this.http.post<string>(this.API, entity);
   }
 
   addLegalRepresentative(entity: PersonDTO): Observable<PersonDTO> {
-    console.log(this.tokenService.getEmail())
-    console.log(entity)
-    return this.http.post<PersonDTO>(this.API + this.tokenService.getEmail()?.replace("\"", "")?.replace("\"", ""), entity);
+    return this.http.put<PersonDTO>(this.API + "representative/" + this.tokenService.getId()?.replace("\"", "")?.replace("\"", ""), entity);
   }
 
   delete(uniqueId: any): Observable<void> {
@@ -39,4 +38,7 @@ export class ParticipantService implements ICRUD<Participant> {
     return this.http.put<Participant>(this.API, entity);
   }
 
+  addSpecializations(arr: Specialization[]): Observable<any> {
+    return this.http.put<any>(this.API + "specializations/" + this.tokenService.getId()?.replace("\"", "")?.replace("\"", ""), arr);
+  }
 }

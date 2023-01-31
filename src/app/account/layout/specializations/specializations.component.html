@@ -1,102 +1,60 @@
 <div class="inner">
   <div>
-    <mat-card>
+    <mat-card *ngIf="isDataLoaded">
       <mat-card-header>
-        <mat-card-title>ФИО/Дата рождения/Телефон/Email</mat-card-title>
-        <mat-card-subtitle>Заполните все поля, чтобы перейти к дальнейшему шагу вашей регистрации.
-          <form [formGroup]="participantForm">
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Фамилия</mat-label>
-              <input type="text" class="input" matInput formControlName="secondName">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Имя</mat-label>
-              <input type="text" class="input" matInput formControlName="firstName">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Отчество</mat-label>
-              <input type="text" matInput formControlName="lastName">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Дата рождения</mat-label>
-              <input type="date" class="input" matInput formControlName="birthday">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Номер телефона</mat-label>
-              <input type="text" class="input" matInput formControlName="number">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Почта</mat-label>
-              <input type="email" matInput formControlName="email">
+        <mat-card-title>Выбор специальности</mat-card-title>
+        <mat-card-subtitle>У вас есть возможность выбрать две специальности, для того чтобы добавить вторую
+          специальность необходимо заполнить первую специальность и нажать на кнопку добавить специальность
+          <form>
+            <mat-form-field appearance="fill" class="input-m">
+              <mat-label>Название специальности № {{ specializationsForParticipant.length + 1 }}</mat-label>
+              <mat-select [(ngModel)]="selectedValue" name="s">
+                <mat-option *ngFor="let spec of loadedSpecialization" [value]="spec">
+                  {{spec.name}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </form>
         </mat-card-subtitle>
       </mat-card-header>
+      <mat-card-content align="left">
+        <h3>Выбранная специальность: {{selectedValue.name}}</h3>
+        <h3>Код специальности: {{selectedValue.code}}</h3>
+        <h3>Учебный предмет по специальности: {{selectedValue.subject}}</h3>
+        <h3>Количество мест: {{selectedValue.countOfPlaces}}</h3>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="center">
+          <button mat-fab extended color="primary" class="w-50" (click)="addSpecialization()"
+                  disableRipple>
+            Добавить
+          </button>
+        </div>
+      </mat-card-actions>
     </mat-card>
-    <br>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Место жительста / Место обучения</mat-card-title>
-        <mat-card-subtitle>
-          <form [formGroup]="addressForm" class="left">
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Область</mat-label>
-              <input type="text" class="input" matInput formControlName="area">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Район</mat-label>
-              <input type="text" class="input" matInput formControlName="district">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Населённый пункт</mat-label>
-              <input type="text" matInput formControlName="locality">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Улица (проспект, переулка)</mat-label>
-              <input type="text" class="input" matInput formControlName="street">
-            </mat-form-field>
-            <mat-form-field class="w-100 min" appearance="outline">
-              <mat-label>Дом</mat-label>
-              <input type="number" class="input" matInput formControlName="house">
-            </mat-form-field>
-            <mat-form-field class="w-100 min" appearance="outline">
-              <mat-label>Корп.</mat-label>
-              <input type="number" matInput formControlName="corps">
-            </mat-form-field>
-            <mat-form-field class="w-100 min" appearance="outline">
-              <mat-label>Кв.</mat-label>
-              <input type="number" matInput formControlName="flat">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Учреждение образования</mat-label>
-              <input type="text" matInput formControlName="educationalInstitution">
-            </mat-form-field>
-          </form>
-        </mat-card-subtitle>
-      </mat-card-header>
-    </mat-card>
-    <br>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Паспортные данные (только латиница)</mat-card-title>
-        <mat-card-subtitle>
-          <form [formGroup]="passportForm">
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Серия</mat-label>
-              <input type="text" class="input" matInput formControlName="series">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Номер</mat-label>
-              <input type="number" class="input" matInput formControlName="number">
-            </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Индентификационный номер</mat-label>
-              <input type="text" matInput formControlName="identityNumber">
-            </mat-form-field>
-          </form>
-        </mat-card-subtitle>
-      </mat-card-header>
-    </mat-card>
+    <br/>
+    <br/>
+    <div class="row" *ngIf="specializationsForParticipant.length!=0">
+      <mat-card>
+        <mat-card-content align="left">
+          <h2>Для участия в олимпиаде вы выбрали следующие специальности:</h2>
+          <hr/>
+          <div appearance="fill" class="input-m" *ngFor="let spec of specializationsForParticipant">
+            <h3>Выбранная специальность: {{spec.name}}</h3>
+            <h3>Код специальности: {{spec.code}}</h3>
+            <h3>Учебный предмет по специальности: {{spec.subject}}</h3>
+            <h3>Количество мест: {{spec.countOfPlaces}}</h3>
+            <div class="center">
+              <button mat-fab extended color="primary" class="w-50" (click)="remove(spec)"
+                      disableRipple>
+                Убрать
+              </button>
+            </div>
+            <hr/>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
     <br/>
     <div class="row">
       <mat-card class="policy">
@@ -106,10 +64,10 @@
             и условиями пользования веб-сервисом
             <div>
               <section class="left">
-                <mat-checkbox class="example-margin" [(ngModel)]="policy">Политика конфиденциальности</mat-checkbox>
+                <mat-checkbox [(ngModel)]="policy">Политика конфиденциальности</mat-checkbox>
               </section>
               <section class="left">
-                <mat-checkbox class="example-margin" [(ngModel)]="dataProcessing">Обработка данных в соответствии с
+                <mat-checkbox [(ngModel)]="dataProcessing">Обработка данных в соответствии с
                   законом о персональных данных
                   от 7 мая 2021 г. № 99-3
                 </mat-checkbox>
@@ -120,7 +78,7 @@
         <mat-card-actions>
           <div class="center">
             <button mat-fab extended color="primary" class="w-50" [disabled]="formsValid()" (click)="submit()"
-                    routerLink="/legal-representative"
+                    routerLink="/success-registration"
                     disableRipple>
               Добавить
             </button>

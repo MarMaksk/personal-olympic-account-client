@@ -10,6 +10,7 @@ import {MaterialModule} from "./material.module";
 import {RouterModule} from "@angular/router";
 import {UserModule} from "./user/user.module";
 import {NavigationComponent} from "./navigation/navigation.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {NavigationComponent} from "./navigation/navigation.component";
   ],
   imports: [
     BrowserModule,
+    MatFormFieldModule,
     BrowserAnimationsModule,
     NgxPermissionsModule.forRoot(),
     AppRoutingModule,

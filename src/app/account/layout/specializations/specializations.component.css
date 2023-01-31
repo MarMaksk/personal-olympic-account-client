@@ -28,3 +28,8 @@ mat-form-field {
   padding: 1% 2%;
   width: 29%;
 }
+
+.input-m {
+  display: block;
+  width: 97%;
+}

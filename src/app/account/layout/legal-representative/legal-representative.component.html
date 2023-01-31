@@ -1,4 +1,4 @@
-<div class="inner">
+<div class="inner" *ngIf="isDataLoaded">
   <div>
     <mat-card>
       <mat-card-header>
@@ -70,7 +70,7 @@
         <mat-card-actions>
           <div class="center">
             <button mat-fab extended color="primary" class="w-50" [disabled]="formsValid()" (click)="submit()"
-                    routerLink="/legal-representative"
+                    routerLink="/specializations"
                     disableRipple>
               Добавить
             </button>

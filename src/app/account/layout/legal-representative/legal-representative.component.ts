@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NotificationService} from "../../../user/service/notification.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {MatDialog} from "@angular/material/dialog";
 import {TokenStorageService} from "../../../user/service/token-storage.service";
 import {ParticipantService} from "../../service/participant.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -24,7 +23,6 @@ export class LegalRepresentativeComponent implements OnInit {
   isDataLoaded = false;
 
   person: PersonDTO | any
-  passport: Passport | any
 
   public personForm: FormGroup | any;
   public passportForm: FormGroup | any;
@@ -33,55 +31,91 @@ export class LegalRepresentativeComponent implements OnInit {
 
   constructor(private notification: NotificationService,
               private participantService: ParticipantService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private tokenService: TokenStorageService) {
   }
 
   ngOnInit(): void {
-    this.personForm = this.createPersonForm()
-    this.passportForm = this.createPassportForm()
+    this.loadRepresentative()
   }
 
   formsValid(): boolean {
     return !!(this.personForm.invalid || this.passportForm.invalid || !this.policy || !this.dataProcessing);
   }
 
+  loadRepresentative(): void {
+    this.participantService.find(this.tokenService.getId())
+      .subscribe(data => {
+        this.person = data.legalRepresentative
+        this.personForm = this.createPersonForm()
+        this.passportForm = this.createPassportForm()
+        this.isDataLoaded = true;
+      }, error => {
+        this.personForm = this.createPersonForm()
+        this.passportForm = this.createPassportForm()
+        this.isDataLoaded = true;
+        this.notification.showSnackBar("Произошла ошибка при обращении к серверу")
+      })
+  }
+
   createPersonForm(): FormGroup {
-    return this.fb.group({
-        secondName: ['', Validators.compose([Validators.required])],
-        firstName: ['', Validators.compose([Validators.required])],
-        lastName: ['', Validators.compose([Validators.required])],
-        number: ['', Validators.compose([Validators.required,
-          Validators.pattern('^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$')])],
-      }
-    )
+    if (this.person == null)
+      return this.fb.group({
+          secondName: ['', Validators.compose([Validators.required])],
+          firstName: ['', Validators.compose([Validators.required])],
+          lastName: ['', Validators.compose([Validators.required])],
+          number: ['', Validators.compose([Validators.required,
+            Validators.pattern('^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$')])],
+        }
+      )
+    else
+      return this.fb.group({
+          secondName: [this.person.secondName, Validators.compose([Validators.required])],
+          firstName: [this.person.firstName, Validators.compose([Validators.required])],
+          lastName: [this.person.lastName, Validators.compose([Validators.required])],
+          number: [this.person.number, Validators.compose([Validators.required,
+            Validators.pattern('^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$')])],
+        }
+      )
   }
 
   createPassportForm(): FormGroup {
-    return this.fb.group({
-        series: ['', Validators.compose([Validators.required,
-          Validators.pattern('[A-Z]{2}')])],
-        number: ['', Validators.compose([Validators.required,
-          Validators.pattern('[0-9]{7}')])],
-        identityNumber: ['', Validators.compose([Validators.required,
-          Validators.pattern('[A-Z0-9]{14}')])]
-      }
-    )
+    if (this.person == null)
+      return this.fb.group({
+          series: ['', Validators.compose([Validators.required,
+            Validators.pattern('[A-Z]{2}')])],
+          number: ['', Validators.compose([Validators.required,
+            Validators.pattern('[0-9]{7}')])],
+          identityNumber: ['', Validators.compose([Validators.required,
+            Validators.pattern('[A-Z0-9]{14}')])]
+        }
+      )
+    else
+      return this.fb.group({
+          series: [this.person.passport.series, Validators.compose([Validators.required,
+            Validators.pattern('[A-Z]{2}')])],
+          number: [this.person.passport.number, Validators.compose([Validators.required,
+            Validators.pattern('[0-9]{7}')])],
+          identityNumber: [this.person.passport.identityNumber, Validators.compose([Validators.required,
+            Validators.pattern('[A-Z0-9]{14}')])]
+        }
+      )
   }
 
   submit(): void {
-    this.passport = {
+    let passport: Passport
+    passport = {
       series: this.passportForm.value.series,
       number: this.passportForm.value.number,
       identityNumber: this.passportForm.value.identityNumber
     }
     this.person = {
-        firstName: this.personForm.value.firstName,
-        secondName: this.personForm.value.secondName,
-        lastName: this.personForm.value.lastName,
-        passport: this.passport,
-        number: this.personForm.value.number
+      firstName: this.personForm.value.firstName,
+      secondName: this.personForm.value.secondName,
+      lastName: this.personForm.value.lastName,
+      passport: passport,
+      number: this.personForm.value.number
     }
-    console.log(this.person)
     this.participantService.addLegalRepresentative(this.person)
       .subscribe(() => {
         },

@@ -10,13 +10,18 @@ import {PersonalDataComponent} from "./layout/personal-data/personal-data.compon
 import { LegalRepresentativeComponent } from './layout/legal-representative/legal-representative.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { SpecializationsComponent } from './layout/specializations/specializations.component';
+import { SuccessRegistrationComponent } from './layout/success-registration/success-registration.component';
+import {CalendarModule} from "primeng/calendar";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
   declarations: [OlympicAccountComponent,
     PersonalDataComponent,
   LegalRepresentativeComponent,
-  SpecializationsComponent],
+  SpecializationsComponent,
+  SuccessRegistrationComponent],
     imports: [
         CommonModule,
         BrowserModule,
@@ -24,7 +29,9 @@ import { SpecializationsComponent } from './layout/specializations/specializatio
         MaterialModule,
         HttpClientModule,
         AppRoutingModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+      MatDatepickerModule,
+      MatNativeDateModule
     ],
   exports: [OlympicAccountComponent]
 })
