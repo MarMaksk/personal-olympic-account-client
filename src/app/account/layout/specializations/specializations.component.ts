@@ -5,6 +5,7 @@ import {ParticipantService} from "../../service/participant.service";
 import {Specialization} from "../../models/specialization";
 import {SpecializationService} from "../../service/specialization.service";
 import {TokenStorageService} from "../../../user/service/token-storage.service";
+import {SDOuserService} from "../../service/sdo-user.service";
 
 @Component({
   selector: 'app-specializations',
@@ -27,7 +28,7 @@ export class SpecializationsComponent implements OnInit {
               private participantService: ParticipantService,
               private specializationService: SpecializationService,
               private tokenService: TokenStorageService,
-              private fb: FormBuilder) {
+              private sdoUserService: SDOuserService) {
   }
 
   ngOnInit(): void {
@@ -68,6 +69,9 @@ export class SpecializationsComponent implements OnInit {
 
 
   submit(): void {
+    this.sdoUserService.create()
+      .subscribe(data => {
+      })
     this.participantService.addSpecializations(this.specializationsForParticipant)
       .subscribe(data => {
         },
