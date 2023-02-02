@@ -53,10 +53,9 @@ export class RegistrationComponent implements OnInit {
       this.tokeStorage.saveRoles(data.roles)
       this.notificationService.showSnackBar("Регистрация прошла успешно")
       this.router.navigate(['/main'])
-      window.location.reload();
+      // window.location.reload();
     }, error => {
-      console.log(error);
-      this.notificationService.showSnackBar(error.message)
+      this.notificationService.showSnackBar("Логин и пароль должны содержать минимум 4 символа")
     })
   }
 }

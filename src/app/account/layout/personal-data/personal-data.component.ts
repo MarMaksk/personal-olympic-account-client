@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Address} from "../../models/address";
 import {Participant} from "../../models/participant";
 import {Passport} from "../../models/passport";
+import {Router} from "@angular/router";
 
 @Component({
   templateUrl: './personal-data.component.html',
@@ -22,7 +23,7 @@ import {Passport} from "../../models/passport";
 export class PersonalDataComponent implements OnInit {
 
   isDataLoaded = false;
-
+  participantExist = false;
 
   participant: Participant | any
 
@@ -37,6 +38,7 @@ export class PersonalDataComponent implements OnInit {
   constructor(private notification: NotificationService,
               private participantService: ParticipantService,
               private fb: FormBuilder,
+              private router: Router,
               private tokenService: TokenStorageService) {
     this.maxDateVal.setFullYear(this.maxDateVal.getFullYear() - 6)
     this.minDateVal.setFullYear(this.minDateVal.getFullYear() - 18)
@@ -47,20 +49,25 @@ export class PersonalDataComponent implements OnInit {
   }
 
   loadParticipant(): void {
-      this.participantService.find(this.tokenService.getId())
-        .subscribe(data => {
-          this.participant = data
-          this.addressForm = this.createAddressForm()
-          this.participantForm = this.createParticipantForm()
-          this.passportForm = this.createPassportForm()
-          this.isDataLoaded = true;
-        }, error => {
-          this.addressForm = this.createAddressForm()
-          this.participantForm = this.createParticipantForm()
-          this.passportForm = this.createPassportForm()
-          this.isDataLoaded = true;
-          this.notification.showSnackBar("Произошла ошибка при обращении к серверу")
-        })
+    this.participantService.find(this.tokenService.getId())
+      .subscribe(data => {
+        this.participant = data
+        if (this.participant.id != null) {
+          this.participantExist = true
+          this.policy = true
+          this.dataProcessing = true
+        }
+        this.addressForm = this.createAddressForm()
+        this.participantForm = this.createParticipantForm()
+        this.passportForm = this.createPassportForm()
+        this.isDataLoaded = true;
+      }, error => {
+        this.addressForm = this.createAddressForm()
+        this.participantForm = this.createParticipantForm()
+        this.passportForm = this.createPassportForm()
+        this.isDataLoaded = true;
+        this.notification.showSnackBar("Произошла ошибка при обращении к серверу")
+      })
   }
 
   formsValid(): boolean {
@@ -105,13 +112,14 @@ export class PersonalDataComponent implements OnInit {
   createAddressForm(): FormGroup {
     if (this.participant.address != null)
       return this.fb.group({
-          area: [this.participant.address.area, Validators.compose([Validators.required])],
+          area: [this.participant.address.area, Validators.compose([Validators.required,
+            Validators.pattern('[а-яА-Я]')])],
           district: [this.participant.address.district, Validators.compose([Validators.required])],
           locality: [this.participant.address.locality, Validators.compose([Validators.required])],
           street: [this.participant.address.street, Validators.compose([Validators.required])],
           house: [this.participant.address.house, Validators.compose([Validators.required])],
-          corps: [this.participant.address.corps],
-          flat: [this.participant.address.flat],
+          corps: [this.participant.address.corps == 0 ? null : this.participant.address.corps],
+          flat: [this.participant.address.flat == 0 ? null : this.participant.address.flat],
           educationalInstitution: [this.participant.educationalInstitution, Validators.compose([Validators.required])]
         }
       )
@@ -153,40 +161,46 @@ export class PersonalDataComponent implements OnInit {
   }
 
   submit(): void {
-    let address: Address
-    let passport: Passport
-    address = {
-      area: this.addressForm.value.area,
-      district: this.addressForm.value.district,
-      locality: this.addressForm.value.locality,
-      street: this.addressForm.value.street,
-      house: this.addressForm.value.house,
-      corps: this.addressForm.value.corps,
-      flat: this.addressForm.value.flat
-    }
-    passport = {
-      series: this.passportForm.value.series,
-      number: this.passportForm.value.number,
-      identityNumber: this.passportForm.value.identityNumber
-    }
-    this.participant = {
-      id: this.tokenService.getId(),
-      person: {
-        firstName: this.participantForm.value.firstName,
-        secondName: this.participantForm.value.secondName,
-        lastName: this.participantForm.value.lastName,
-        passport: passport,
-        number: this.participantForm.value.number
-      },
-      birthday: this.participantForm.value.birthday,
-      address: address,
-      email: this.participantForm.value.email,
-      educationalInstitution: this.addressForm.value.educationalInstitution,
-    }
-    this.participantService.create(this.participant)
-      .subscribe(data => {
+    if (!this.participantExist) {
+      let address: Address
+      let passport: Passport
+      address = {
+        area: this.addressForm.value.area,
+        district: this.addressForm.value.district,
+        locality: this.addressForm.value.locality,
+        street: this.addressForm.value.street,
+        house: this.addressForm.value.house,
+        corps: this.addressForm.value.corps,
+        flat: this.addressForm.value.flat
+      }
+      passport = {
+        series: this.passportForm.value.series,
+        number: this.passportForm.value.number,
+        identityNumber: this.passportForm.value.identityNumber
+      }
+      this.participant = {
+        id: this.tokenService.getId(),
+        person: {
+          firstName: this.participantForm.value.firstName,
+          secondName: this.participantForm.value.secondName,
+          lastName: this.participantForm.value.lastName,
+          passport: passport,
+          number: this.participantForm.value.number
         },
-        error => this.notification.showSnackBar("Произошла ошибка при сохранении данных"))
+        birthday: this.participantForm.value.birthday,
+        address: address,
+        email: this.participantForm.value.email,
+        educationalInstitution: this.addressForm.value.educationalInstitution,
+      }
+      this.participantService.create(this.participant)
+        .subscribe(data => {
+            this.router.navigate(['/legal-representative']);
+          },
+          error => {
+            console.log(error)
+            this.notification.showSnackBar(error)
+          })
+    }
   }
 
   disableDate() {

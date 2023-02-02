@@ -6,6 +6,7 @@ import {ParticipantService} from "../../service/participant.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Passport} from "../../models/passport";
 import {PersonDTO} from "../../models/personDTO";
+import {Router} from "@angular/router";
 
 @Component({
   templateUrl: './legal-representative.component.html',
@@ -28,10 +29,12 @@ export class LegalRepresentativeComponent implements OnInit {
   public passportForm: FormGroup | any;
   public policy = false;
   public dataProcessing = false;
+  public participantExist = false;
 
   constructor(private notification: NotificationService,
               private participantService: ParticipantService,
               private fb: FormBuilder,
+              private router: Router,
               private tokenService: TokenStorageService) {
   }
 
@@ -47,6 +50,11 @@ export class LegalRepresentativeComponent implements OnInit {
     this.participantService.find(this.tokenService.getId())
       .subscribe(data => {
         this.person = data.legalRepresentative
+        if (this.person != null) {
+          this.participantExist = true
+          this.policy = true
+          this.dataProcessing = true
+        }
         this.personForm = this.createPersonForm()
         this.passportForm = this.createPassportForm()
         this.isDataLoaded = true;
@@ -103,22 +111,28 @@ export class LegalRepresentativeComponent implements OnInit {
   }
 
   submit(): void {
-    let passport: Passport
-    passport = {
-      series: this.passportForm.value.series,
-      number: this.passportForm.value.number,
-      identityNumber: this.passportForm.value.identityNumber
+    if (!this.participantExist) {
+      let passport: Passport
+      passport = {
+        series: this.passportForm.value.series,
+        number: this.passportForm.value.number,
+        identityNumber: this.passportForm.value.identityNumber
+      }
+      this.person = {
+        firstName: this.personForm.value.firstName,
+        secondName: this.personForm.value.secondName,
+        lastName: this.personForm.value.lastName,
+        passport: passport,
+        number: this.personForm.value.number
+      }
+      this.participantService.addLegalRepresentative(this.person)
+        .subscribe(() => {
+            this.router.navigate(['/specializations']);
+          },
+          error => {
+            console.log(error)
+            this.notification.showSnackBar("Произошла ошибка при сохранении данных")
+          })
     }
-    this.person = {
-      firstName: this.personForm.value.firstName,
-      secondName: this.personForm.value.secondName,
-      lastName: this.personForm.value.lastName,
-      passport: passport,
-      number: this.personForm.value.number
-    }
-    this.participantService.addLegalRepresentative(this.person)
-      .subscribe(() => {
-        },
-        error => this.notification.showSnackBar("Произошла ошибка при сохранении данных"))
   }
 }

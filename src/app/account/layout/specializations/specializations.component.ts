@@ -23,6 +23,7 @@ export class SpecializationsComponent implements OnInit {
   public specializationForm: FormGroup | any;
   public policy = false;
   public dataProcessing = false;
+  private participantExist = false;
 
   constructor(private notification: NotificationService,
               private participantService: ParticipantService,
@@ -40,6 +41,12 @@ export class SpecializationsComponent implements OnInit {
     this.participantService.find(this.tokenService.getId())
       .subscribe(data => {
         this.specializationsForParticipant = Array.from(new Set(data.specializations));
+        if (this.specializationsForParticipant.length != 0) {
+          this.participantExist = true
+          this.policy = true
+          this.dataProcessing = true
+        }
+        console.log(this.participantExist + " exist spec")
         this.isDataLoaded = true;
       }, error => {
         this.isDataLoaded = true;
@@ -48,9 +55,10 @@ export class SpecializationsComponent implements OnInit {
   }
 
   addSpecialization() {
-    this.specializationsForParticipant.push(this.selectedValue)
-    this.specializationsForParticipant = Array.from(new Set(this.specializationsForParticipant));
-    console.log(this.specializationsForParticipant)
+    if (this.participantExist != true) {
+      this.specializationsForParticipant.push(this.selectedValue)
+      this.specializationsForParticipant = Array.from(new Set(this.specializationsForParticipant));
+    }
   }
 
 
@@ -69,16 +77,19 @@ export class SpecializationsComponent implements OnInit {
 
 
   submit(): void {
-    this.sdoUserService.create()
-      .subscribe(data => {
-      })
-    this.participantService.addSpecializations(this.specializationsForParticipant)
-      .subscribe(data => {
-        },
-        error => this.notification.showSnackBar("Произошла ошибка при сохранении данных"))
+    if (!this.participantExist) {
+      this.sdoUserService.create()
+        .subscribe(data => {
+        })
+      this.participantService.addSpecializations(this.specializationsForParticipant)
+        .subscribe(data => {
+          },
+          error => this.notification.showSnackBar("Произошла ошибка при сохранении данных"))
+    }
   }
 
   remove(spec: Specialization) {
-    this.specializationsForParticipant = this.specializationsForParticipant.filter(item => item !== spec);
+    if (this.participantExist != true)
+      this.specializationsForParticipant = this.specializationsForParticipant.filter(item => item !== spec);
   }
 }

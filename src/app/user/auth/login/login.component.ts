@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
       this.tokeStorage.saveRoles(data.roles)
       this.notificationService.showSnackBar("Авторизация прошла успешно")
       this.router.navigate(['/main'])
-      window.location.reload();
+      // window.location.reload();
     }, error => {
       console.log(error);
       this.notificationService.showSnackBar(error.message)

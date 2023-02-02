@@ -52,6 +52,6 @@ export class TokenStorageService {
 
   logOut(): void {
     window.sessionStorage.clear();
-    window.location.reload();
+    // window.location.reload();
   }
 }

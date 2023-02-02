@@ -7,21 +7,21 @@
     <div class="justify-content-center">
       <mat-form-field appearance="outline">
         <mat-label>Ваш логин</mat-label>
-        <input matInput
+        <input [maxlength]="7" matInput
                formControlName="username">
       </mat-form-field>
     </div>
     <div class="justify-content-center">
       <mat-form-field appearance="outline">
         <mat-label>Ваш пароль</mat-label>
-        <input type="password" matInput
+        <input [maxlength]="16" type="password" matInput
                formControlName="password">
       </mat-form-field>
     </div>
     <div class="justify-content-center">
       <mat-form-field appearance="outline">
         <mat-label>Подтвердите пароль</mat-label>
-        <input type="password" matInput
+        <input [maxlength]="16" type="password" matInput
                formControlName="confirmPassword">
       </mat-form-field>
     </div>

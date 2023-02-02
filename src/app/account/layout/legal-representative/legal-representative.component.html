@@ -2,24 +2,24 @@
   <div>
     <mat-card>
       <mat-card-header>
-        <mat-card-title>ФИО/Дата рождения/Телефон/Email</mat-card-title>
+        <mat-card-title>Информация о законном представителе</mat-card-title>
         <mat-card-subtitle>Заполните все поля, чтобы перейти к дальнейшему шагу вашей регистрации.
           <form [formGroup]="personForm">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Фамилия</mat-label>
-              <input type="text" class="input" matInput formControlName="secondName">
+              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="secondName">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Имя</mat-label>
-              <input type="text" class="input" matInput formControlName="firstName">
+              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="firstName">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Отчество</mat-label>
-              <input type="text" matInput formControlName="lastName">
+              <input type="text" matInput [readonly]="participantExist" formControlName="lastName">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Номер телефона</mat-label>
-              <input type="text" class="input" matInput formControlName="number">
+              <input type="text" [maxlength]="13" class="input" matInput [readonly]="participantExist" formControlName="number">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -33,15 +33,15 @@
           <form [formGroup]="passportForm">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Серия</mat-label>
-              <input type="text" class="input" matInput formControlName="series">
+              <input type="text" class="input" [maxlength]="2" [readonly]="participantExist" matInput formControlName="series">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Номер</mat-label>
-              <input type="number" class="input" matInput formControlName="number">
+              <input type="number" class="input" [maxlength]="7" [readonly]="participantExist" matInput formControlName="number">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Индентификационный номер</mat-label>
-              <input type="text" matInput formControlName="identityNumber">
+              <input type="text" matInput [maxlength]="14" [readonly]="participantExist" formControlName="identityNumber">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -70,7 +70,6 @@
         <mat-card-actions>
           <div class="center">
             <button mat-fab extended color="primary" class="w-50" [disabled]="formsValid()" (click)="submit()"
-                    routerLink="/specializations"
                     disableRipple>
               Добавить
             </button>

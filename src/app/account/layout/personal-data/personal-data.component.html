@@ -7,29 +7,29 @@
           <form [formGroup]="participantForm">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Фамилия</mat-label>
-              <input type="text" class="input" matInput formControlName="secondName">
+              <input type="text" class="input" matInput [readonly]="participantExist" formControlName="secondName">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Имя</mat-label>
-              <input type="text" class="input" matInput formControlName="firstName">
+              <input type="text" class="input" matInput [readonly]="participantExist" formControlName="firstName">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Отчество</mat-label>
-              <input type="text" matInput formControlName="lastName">
+              <input type="text" matInput [readonly]="participantExist" formControlName="lastName">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
-              <input matInput [max]="maxDateVal" [min]="minDateVal" [matDatepicker]="picker" placeholder="Выберите дату"
-                     formControlName="birthday" (keydown)="disableDate()">
+              <input matInput [max]="maxDateVal" [min]="minDateVal" [matDatepicker]="picker" placeholder="Дата рождения"
+                     formControlName="birthday" [readonly]="participantExist" (keydown)="disableDate()">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker ngDefaultControl></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Моб. телелефон</mat-label>
-              <input type="text" class="input" matInput formControlName="number">
+              <input type="text" [maxlength]="13" class="input" [readonly]="participantExist" matInput formControlName="number">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Почта</mat-label>
-              <input type="email" matInput formControlName="email">
+              <input type="email" matInput [readonly]="participantExist" formControlName="email">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -43,36 +43,36 @@
           <form [formGroup]="addressForm" class="left">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Область</mat-label>
-              <input type="text" class="input" matInput formControlName="area">
+              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="area">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Район</mat-label>
-              <input type="text" class="input" matInput formControlName="district">
+              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="district">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Населённый пункт</mat-label>
-              <input type="text" matInput formControlName="locality">
+              <input type="text" matInput [readonly]="participantExist" formControlName="locality">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Улица (проспект, переулка)</mat-label>
-              <input type="text" class="input" matInput formControlName="street">
+              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="street">
             </mat-form-field>
             <mat-form-field class="w-100 min" appearance="outline">
               <mat-label>Дом</mat-label>
-              <input type="number" class="input" min="1" (keypress)="numberOnly($event)" matInput
+              <input type="number" class="input" min="1" [readonly]="participantExist" (keypress)="numberOnly($event)" matInput
                      formControlName="house">
             </mat-form-field>
             <mat-form-field class="w-100 min" appearance="outline">
               <mat-label>Корп.</mat-label>
-              <input type="number" matInput min="1" (keypress)="numberOnly($event)" formControlName="corps">
+              <input type="number" matInput min="1" [readonly]="participantExist" (keypress)="numberOnly($event)" formControlName="corps">
             </mat-form-field>
             <mat-form-field class="w-100 min" appearance="outline">
               <mat-label>Кв.</mat-label>
-              <input type="number" matInput min="1" (keypress)="numberOnly($event)" formControlName="flat">
+              <input type="number" matInput min="1" [readonly]="participantExist" (keypress)="numberOnly($event)" formControlName="flat">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Учреждение образования</mat-label>
-              <input type="text" matInput formControlName="educationalInstitution">
+              <input type="text" matInput [readonly]="participantExist" formControlName="educationalInstitution">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -86,15 +86,15 @@
           <form [formGroup]="passportForm">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Серия</mat-label>
-              <input type="text" class="input" matInput formControlName="series">
+              <input type="text" [maxlength]="2" class="input" [readonly]="participantExist" matInput formControlName="series">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Номер</mat-label>
-              <input type="number" class="input" matInput formControlName="number">
+              <input type="number" [maxlength]="7" class="input" [readonly]="participantExist" matInput formControlName="number">
             </mat-form-field>
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Идентификационный номер</mat-label>
-              <input type="text" matInput formControlName="identityNumber">
+              <input type="text" [maxlength]="14" matInput [readonly]="participantExist" formControlName="identityNumber">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -123,7 +123,6 @@
         <mat-card-actions>
           <div class="center">
             <button mat-fab extended color="primary" class="w-50" [disabled]="formsValid()" (click)="submit()"
-                    routerLink="/legal-representative"
                     disableRipple>
               Добавить
             </button>
