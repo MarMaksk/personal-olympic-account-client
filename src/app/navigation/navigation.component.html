@@ -1,10 +1,10 @@
 <mat-toolbar color="primary">
   <span routerLink="/main" style="cursor: pointer;margin-left: 20px;">Личный кабинет олимпиадника</span>
   <div style="float: right; margin-left: 75%">
-    <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" matTooltip="Profile" mat-icon-button>
+    <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" mat-icon-button matTooltip="Profile">
       <mat-icon color="accent">account_box</mat-icon>
     </button>
-    <mat-menu id="menu-item" #menu="matMenu">
+    <mat-menu #menu="matMenu" id="menu-item">
       <button (click)="logout()" mat-menu-item>
         Выйти из системы
       </button>

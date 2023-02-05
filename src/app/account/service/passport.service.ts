@@ -2,9 +2,7 @@ import {ICRUD} from "./ICRUD";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {Participant} from "../models/participant";
 import {Passport} from "../models/passport";
-import {Address} from "../models/address";
 
 @Injectable({
   providedIn: 'root'

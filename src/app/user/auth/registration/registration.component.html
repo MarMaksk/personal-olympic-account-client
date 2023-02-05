@@ -1,32 +1,34 @@
 <div class="register-page">
   <h2>Register</h2>
-  <p>Already have an account?   <button routerLink="/login" mat-stroked-button color="primary">
-    Log in
-  </button></p>
+  <p>Already have an account?
+    <button color="primary" mat-stroked-button routerLink="/login">
+      Log in
+    </button>
+  </p>
   <form [formGroup]="registerForm">
     <div class="justify-content-center">
       <mat-form-field appearance="outline">
         <mat-label>Ваш логин</mat-label>
-        <input [maxlength]="7" matInput
-               formControlName="username">
+        <input [maxlength]="7" formControlName="username"
+               matInput>
       </mat-form-field>
     </div>
     <div class="justify-content-center">
       <mat-form-field appearance="outline">
         <mat-label>Ваш пароль</mat-label>
-        <input [maxlength]="16" type="password" matInput
-               formControlName="password">
+        <input [maxlength]="16" formControlName="password" matInput
+               type="password">
       </mat-form-field>
     </div>
     <div class="justify-content-center">
       <mat-form-field appearance="outline">
         <mat-label>Подтвердите пароль</mat-label>
-        <input [maxlength]="16" type="password" matInput
-               formControlName="confirmPassword">
+        <input [maxlength]="16" formControlName="confirmPassword" matInput
+               type="password">
       </mat-form-field>
     </div>
 
-    <button style="width: 5rem" [disabled]="registerForm.invalid" (click)="submit()" mat-flat-button color="primary">
+    <button (click)="submit()" [disabled]="registerForm.invalid" color="primary" mat-flat-button style="width: 5rem">
       Register
     </button>
 

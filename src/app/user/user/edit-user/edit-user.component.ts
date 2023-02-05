@@ -43,16 +43,16 @@ export class EditUserComponent implements OnInit {
       })
   }
 
+  closeDialog() {
+    this.dialogRef.close()
+  }
+
   private updateUser(): User {
     this.data.user.firstname = this.profileEditForm.value.firstname;
     this.data.user.lastname = this.profileEditForm.value.lastname;
     this.data.user.bio = this.profileEditForm.value.bio;
     this.data.user.email = this.profileEditForm.value.email;
     return this.data.user;
-  }
-
-  closeDialog() {
-    this.dialogRef.close()
   }
 
 }

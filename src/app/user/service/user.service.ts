@@ -9,9 +9,10 @@ const USER_API = 'http://localhost:8080/olymp/user/'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getUserById(id: number): Observable<any>{
+  getUserById(id: number): Observable<any> {
     let params = new HttpParams()
     params = params.append('id', id)
     return this.http.get(USER_API, {

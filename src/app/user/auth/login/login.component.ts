@@ -49,9 +49,12 @@ export class LoginComponent implements OnInit {
       console.log(data)
       this.tokeStorage.saveId(data.id)
       this.tokeStorage.saveRoles(data.roles)
+      console.log(data)
+      console.log(data.roles)
       this.notificationService.showSnackBar("Авторизация прошла успешно")
+      if (data.roles.indexOf('ROLE_ADMIN') !== -1)
+        console.log('true')
       this.router.navigate(['/main'])
-      // window.location.reload();
     }, error => {
       console.log(error);
       this.notificationService.showSnackBar(error.message)

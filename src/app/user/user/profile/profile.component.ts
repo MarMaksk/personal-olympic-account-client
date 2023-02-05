@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
 
   user: User | any;
   isUserDataLoaded = false;
+  map = new Map();
 
   constructor(private tokenStorage: TokenStorageService,
               private dialog: MatDialog,
@@ -29,8 +30,6 @@ export class ProfileComponent implements OnInit {
         this.isUserDataLoaded = true
       })
   }
-
-  map = new Map();
 
   openEditDialog(): void {
     const dialogUserEditConfig = new MatDialogConfig();

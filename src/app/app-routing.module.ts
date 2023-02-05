@@ -8,6 +8,7 @@ import {PersonalDataComponent} from "./account/layout/personal-data/personal-dat
 import {LegalRepresentativeComponent} from "./account/layout/legal-representative/legal-representative.component";
 import {SpecializationsComponent} from "./account/layout/specializations/specializations.component";
 import {SuccessRegistrationComponent} from "./account/layout/success-registration/success-registration.component";
+import {AdminPanelComponent} from "./account/layout/admin-panel/admin-panel.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'legal-representative', component: LegalRepresentativeComponent},
   {path: 'specializations', component: SpecializationsComponent},
   {path: 'success-registration', component: SuccessRegistrationComponent},
+  {path: 'admin-panel', component: AdminPanelComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path: '', redirectTo: 'login', pathMatch: 'full'},
 ]

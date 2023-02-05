@@ -1,35 +1,36 @@
-<div class="inner" *ngIf="isDataLoaded">
+<div *ngIf="isDataLoaded" class="inner">
   <div>
     <mat-card>
       <mat-card-header>
         <mat-card-title>ФИО/Дата рождения/Телефон/Email</mat-card-title>
         <mat-card-subtitle>Заполните все поля, чтобы перейти к дальнейшему шагу вашей регистрации.
           <form [formGroup]="participantForm">
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Фамилия</mat-label>
-              <input type="text" class="input" matInput [readonly]="participantExist" formControlName="secondName">
+              <input [readonly]="participantExist" class="input" formControlName="secondName" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Имя</mat-label>
-              <input type="text" class="input" matInput [readonly]="participantExist" formControlName="firstName">
+              <input [readonly]="participantExist" class="input" formControlName="firstName" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Отчество</mat-label>
-              <input type="text" matInput [readonly]="participantExist" formControlName="lastName">
+              <input [readonly]="participantExist" formControlName="lastName" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
-              <input matInput [max]="maxDateVal" [min]="minDateVal" [matDatepicker]="picker" placeholder="Дата рождения"
-                     formControlName="birthday" [readonly]="participantExist" (keydown)="disableDate()">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-form-field appearance="outline" class="w-100">
+              <input (keydown)="disableDate()" [matDatepicker]="picker" [max]="maxDateVal" [min]="minDateVal" [readonly]="participantExist"
+                     formControlName="birthday" matInput placeholder="Дата рождения">
+              <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker ngDefaultControl></mat-datepicker>
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Моб. телелефон</mat-label>
-              <input type="text" [maxlength]="13" class="input" [readonly]="participantExist" matInput formControlName="number">
+              <input [maxlength]="13" [readonly]="participantExist" class="input" formControlName="number" matInput
+                     type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Почта</mat-label>
-              <input type="email" matInput [readonly]="participantExist" formControlName="email">
+              <input [readonly]="participantExist" formControlName="email" matInput type="email">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -41,38 +42,41 @@
         <mat-card-title>Место жительста / Место обучения</mat-card-title>
         <mat-card-subtitle>
           <form [formGroup]="addressForm" class="left">
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Область</mat-label>
-              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="area">
+              <input [readonly]="participantExist" class="input" formControlName="area" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Район</mat-label>
-              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="district">
+              <input [readonly]="participantExist" class="input" formControlName="district" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Населённый пункт</mat-label>
-              <input type="text" matInput [readonly]="participantExist" formControlName="locality">
+              <input [readonly]="participantExist" formControlName="locality" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Улица (проспект, переулка)</mat-label>
-              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="street">
+              <input [readonly]="participantExist" class="input" formControlName="street" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100 min" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100 min">
               <mat-label>Дом</mat-label>
-              <input type="number" class="input" min="1" [readonly]="participantExist" (keypress)="numberOnly($event)" matInput
-                     formControlName="house">
+              <input (keypress)="numberOnly($event)" [readonly]="participantExist" class="input" formControlName="house" matInput
+                     min="1"
+                     type="number">
             </mat-form-field>
-            <mat-form-field class="w-100 min" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100 min">
               <mat-label>Корп.</mat-label>
-              <input type="number" matInput min="1" [readonly]="participantExist" (keypress)="numberOnly($event)" formControlName="corps">
+              <input (keypress)="numberOnly($event)" [readonly]="participantExist" formControlName="corps" matInput min="1"
+                     type="number">
             </mat-form-field>
-            <mat-form-field class="w-100 min" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100 min">
               <mat-label>Кв.</mat-label>
-              <input type="number" matInput min="1" [readonly]="participantExist" (keypress)="numberOnly($event)" formControlName="flat">
+              <input (keypress)="numberOnly($event)" [readonly]="participantExist" formControlName="flat" matInput min="1"
+                     type="number">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Учреждение образования</mat-label>
-              <input type="text" matInput [readonly]="participantExist" formControlName="educationalInstitution">
+              <input [readonly]="participantExist" formControlName="educationalInstitution" matInput type="text">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -84,17 +88,20 @@
         <mat-card-title>Паспортные данные (только латиница)</mat-card-title>
         <mat-card-subtitle>
           <form [formGroup]="passportForm">
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Серия</mat-label>
-              <input type="text" [maxlength]="2" class="input" [readonly]="participantExist" matInput formControlName="series">
+              <input [maxlength]="2" [readonly]="participantExist" class="input" formControlName="series" matInput
+                     type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Номер</mat-label>
-              <input type="number" [maxlength]="7" class="input" [readonly]="participantExist" matInput formControlName="number">
+              <input [maxlength]="7" [readonly]="participantExist" class="input" formControlName="number" matInput
+                     type="number">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Идентификационный номер</mat-label>
-              <input type="text" [maxlength]="14" matInput [readonly]="participantExist" formControlName="identityNumber">
+              <input [maxlength]="14" [readonly]="participantExist" formControlName="identityNumber" matInput
+                     type="text">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -109,10 +116,10 @@
             и условиями пользования веб-сервисом
             <div>
               <section class="left">
-                <mat-checkbox class="example-margin" [(ngModel)]="policy">Политика конфиденциальности</mat-checkbox>
+                <mat-checkbox [(ngModel)]="policy" class="example-margin">Политика конфиденциальности</mat-checkbox>
               </section>
               <section class="left">
-                <mat-checkbox class="example-margin" [(ngModel)]="dataProcessing">Обработка данных в соответствии с
+                <mat-checkbox [(ngModel)]="dataProcessing" class="example-margin">Обработка данных в соответствии с
                   законом о персональных данных
                   от 7 мая 2021 г. № 99-3
                 </mat-checkbox>
@@ -122,8 +129,8 @@
         </mat-card-header>
         <mat-card-actions>
           <div class="center">
-            <button mat-fab extended color="primary" class="w-50" [disabled]="formsValid()" (click)="submit()"
-                    disableRipple>
+            <button (click)="submit()" [disabled]="formsValid()" class="w-50" color="primary" disableRipple extended
+                    mat-fab>
               Добавить
             </button>
           </div>

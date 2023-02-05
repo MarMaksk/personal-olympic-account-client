@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxPermissionsModule} from "ngx-permissions";
 import {AppRoutingModule} from "./app-routing.module";
 import {OlympicAccountModule} from "./account/olympic-account.module";
@@ -31,4 +31,5 @@ import {MatFormFieldModule} from "@angular/material/form-field";
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

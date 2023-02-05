@@ -30,17 +30,6 @@ export class RegistrationComponent implements OnInit {
     this.registerForm = this.createRegisterForm()
   }
 
-  private createRegisterForm() {
-    return this.formBuilder.group({
-      username: ['', Validators.compose([Validators.required,
-        Validators.pattern('[a-zA-Z1-9]{4,7}')])],
-      password: ['', Validators.compose([Validators.required,
-        Validators.pattern('[a-zA-Z1-9]{4,16}')])],
-      confirmPassword: ['', Validators.compose([Validators.required,
-        Validators.pattern('[a-zA-Z1-9]{4,16}')])],
-    })
-  }
-
   submit(): void {
     this.authService.register({
       username: this.registerForm.value.username,
@@ -56,6 +45,17 @@ export class RegistrationComponent implements OnInit {
       // window.location.reload();
     }, error => {
       this.notificationService.showSnackBar("Логин и пароль должны содержать минимум 4 символа")
+    })
+  }
+
+  private createRegisterForm() {
+    return this.formBuilder.group({
+      username: ['', Validators.compose([Validators.required,
+        Validators.pattern('[a-zA-Z1-9]{4,7}')])],
+      password: ['', Validators.compose([Validators.required,
+        Validators.pattern('[a-zA-Z1-9]{4,16}')])],
+      confirmPassword: ['', Validators.compose([Validators.required,
+        Validators.pattern('[a-zA-Z1-9]{4,16}')])],
     })
   }
 }

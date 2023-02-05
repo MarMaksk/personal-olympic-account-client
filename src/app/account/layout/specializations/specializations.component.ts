@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 import {NotificationService} from "../../../user/service/notification.service";
 import {ParticipantService} from "../../service/participant.service";
 import {Specialization} from "../../models/specialization";
@@ -66,16 +66,6 @@ export class SpecializationsComponent implements OnInit {
     return (!this.policy || !this.dataProcessing || this.specializationsForParticipant.length > 2);
   }
 
-  private findAllSpecializations(): void {
-    this.specializationService.findAll()
-      .subscribe(data => {
-        this.loadedSpecialization = data;
-        this.selectedValue = this.loadedSpecialization[0]
-        this.isDataLoaded = true;
-      }, error => this.notification.showSnackBar("При получении специальностей произошла ошибка"))
-  }
-
-
   submit(): void {
     if (!this.participantExist) {
       this.sdoUserService.create()
@@ -91,5 +81,14 @@ export class SpecializationsComponent implements OnInit {
   remove(spec: Specialization) {
     if (this.participantExist != true)
       this.specializationsForParticipant = this.specializationsForParticipant.filter(item => item !== spec);
+  }
+
+  private findAllSpecializations(): void {
+    this.specializationService.findAll()
+      .subscribe(data => {
+        this.loadedSpecialization = data;
+        this.selectedValue = this.loadedSpecialization[0]
+        this.isDataLoaded = true;
+      }, error => this.notification.showSnackBar("При получении специальностей произошла ошибка"))
   }
 }

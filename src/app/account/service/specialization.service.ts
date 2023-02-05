@@ -1,10 +1,8 @@
 import {ICRUD} from "./ICRUD";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {Participant} from "../models/participant";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Specialization} from "../models/specialization";
-import {Address} from "../models/address";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +18,10 @@ export class SpecializationService implements ICRUD<Specialization> {
     return this.http.post<Specialization>(this.API, entity);
   }
 
-  delete(uniqueId: any): Observable<void> {
-    return this.http.delete<void>(uniqueId);
+  delete(uniqueId: any): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("id",uniqueId);
+    return this.http.delete<any>(this.API, {params: queryParams});
   }
 
   findAll(): Observable<Specialization[]> {

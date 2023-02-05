@@ -1,25 +1,26 @@
-<div class="inner" *ngIf="isDataLoaded">
+<div *ngIf="isDataLoaded" class="inner">
   <div>
     <mat-card>
       <mat-card-header>
         <mat-card-title>Информация о законном представителе</mat-card-title>
         <mat-card-subtitle>Заполните все поля, чтобы перейти к дальнейшему шагу вашей регистрации.
           <form [formGroup]="personForm">
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Фамилия</mat-label>
-              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="secondName">
+              <input [readonly]="participantExist" class="input" formControlName="secondName" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Имя</mat-label>
-              <input type="text" class="input" [readonly]="participantExist" matInput formControlName="firstName">
+              <input [readonly]="participantExist" class="input" formControlName="firstName" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Отчество</mat-label>
-              <input type="text" matInput [readonly]="participantExist" formControlName="lastName">
+              <input [readonly]="participantExist" formControlName="lastName" matInput type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Номер телефона</mat-label>
-              <input type="text" [maxlength]="13" class="input" matInput [readonly]="participantExist" formControlName="number">
+              <input [maxlength]="13" [readonly]="participantExist" class="input" formControlName="number" matInput
+                     type="text">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -31,17 +32,20 @@
         <mat-card-title>Паспортные данные (только латиница)</mat-card-title>
         <mat-card-subtitle>
           <form [formGroup]="passportForm">
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Серия</mat-label>
-              <input type="text" class="input" [maxlength]="2" [readonly]="participantExist" matInput formControlName="series">
+              <input [maxlength]="2" [readonly]="participantExist" class="input" formControlName="series" matInput
+                     type="text">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Номер</mat-label>
-              <input type="number" class="input" [maxlength]="7" [readonly]="participantExist" matInput formControlName="number">
+              <input [maxlength]="7" [readonly]="participantExist" class="input" formControlName="number" matInput
+                     type="number">
             </mat-form-field>
-            <mat-form-field class="w-100" appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Индентификационный номер</mat-label>
-              <input type="text" matInput [maxlength]="14" [readonly]="participantExist" formControlName="identityNumber">
+              <input [maxlength]="14" [readonly]="participantExist" formControlName="identityNumber" matInput
+                     type="text">
             </mat-form-field>
           </form>
         </mat-card-subtitle>
@@ -69,8 +73,8 @@
         </mat-card-header>
         <mat-card-actions>
           <div class="center">
-            <button mat-fab extended color="primary" class="w-50" [disabled]="formsValid()" (click)="submit()"
-                    disableRipple>
+            <button (click)="submit()" [disabled]="formsValid()" class="w-50" color="primary" disableRipple extended
+                    mat-fab>
               Добавить
             </button>
           </div>

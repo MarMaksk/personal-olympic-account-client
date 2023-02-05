@@ -2,10 +2,10 @@
 
   <h1>Профиль</h1>
   <div style="text-align: right">
-    <button mat-flat-button color="primary" (click)="openEditDialog()">Изменить профиль</button>
+    <button (click)="openEditDialog()" color="primary" mat-flat-button>Изменить профиль</button>
   </div>
 
-  <div style="padding-top: 2rem" class="row">
+  <div class="row" style="padding-top: 2rem">
     <div class="col" style="text-align: left">
 
       <h2>Логин: {{user.username}}</h2>

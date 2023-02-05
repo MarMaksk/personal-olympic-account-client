@@ -25,8 +25,8 @@
       </mat-card-content>
       <mat-card-actions>
         <div class="center">
-          <button mat-fab extended color="primary" class="w-50" (click)="addSpecialization()"
-                  disableRipple>
+          <button (click)="addSpecialization()" class="w-50" color="primary" disableRipple extended
+                  mat-fab>
             Добавить
           </button>
         </div>
@@ -34,19 +34,19 @@
     </mat-card>
     <br/>
     <br/>
-    <div class="row" *ngIf="specializationsForParticipant.length!=0">
+    <div *ngIf="specializationsForParticipant.length!=0" class="row">
       <mat-card>
         <mat-card-content align="left">
           <h2>Для участия в олимпиаде вы выбрали следующие специальности:</h2>
           <hr/>
-          <div appearance="fill" class="input-m" *ngFor="let spec of specializationsForParticipant">
+          <div *ngFor="let spec of specializationsForParticipant" appearance="fill" class="input-m">
             <h3>Выбранная специальность: {{spec.name}}</h3>
             <h3>Код специальности: {{spec.code}}</h3>
             <h3>Учебный предмет по специальности: {{spec.subject}}</h3>
             <h3>Количество мест: {{spec.countOfPlaces}}</h3>
             <div class="center">
-              <button mat-fab extended color="primary" class="w-50" (click)="remove(spec)"
-                      disableRipple>
+              <button (click)="remove(spec)" class="w-50" color="primary" disableRipple extended
+                      mat-fab>
                 Убрать
               </button>
             </div>
@@ -77,9 +77,9 @@
         </mat-card-header>
         <mat-card-actions>
           <div class="center">
-            <button mat-fab extended color="primary" class="w-50" [disabled]="formsValid()" (click)="submit()"
-                    routerLink="/success-registration"
-                    disableRipple>
+            <button (click)="submit()" [disabled]="formsValid()" class="w-50" color="primary" disableRipple extended
+                    mat-fab
+                    routerLink="/success-registration">
               Добавить
             </button>
           </div>

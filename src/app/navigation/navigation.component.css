@@ -6,6 +6,7 @@
   display: block;
   margin: 0 auto;
 }
+
 mat-grid-tile {
   background: lightblue;
 }

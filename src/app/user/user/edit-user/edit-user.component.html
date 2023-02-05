@@ -1,32 +1,33 @@
 <div>
   <h2>Изменить профиль</h2>
   <form [formGroup]="profileEditForm">
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field appearance="outline" class="w-100">
       <mat-label>Имя</mat-label>
-      <input matInput type="text"
-             formControlName="firstname">
+      <input formControlName="firstname" matInput
+             type="text">
     </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field appearance="outline" class="w-100">
       <mat-label>Фамилия</mat-label>
-      <input matInput type="text"
-             formControlName="lastname">
+      <input formControlName="lastname" matInput
+             type="text">
     </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field appearance="outline" class="w-100">
       <mat-label>Электронная почта</mat-label>
-      <input matInput type="email"
-             formControlName="email">
+      <input formControlName="email" matInput
+             type="email">
     </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field appearance="outline" class="w-100">
       <mat-label>Биография</mat-label>
-      <input matInput
-             formControlName="bio">
+      <input formControlName="bio"
+             matInput>
     </mat-form-field>
     <div class="row">
       <button (click)="closeDialog()" class="w-50"
-              mat-button mat-dialog-close disableRipple>
+              disableRipple mat-button mat-dialog-close>
         Закрыть
       </button>
-      <button color="primary" class="w-50" [disabled]="profileEditForm.invalid" (click)="submit()" mat-button disableRipple>
+      <button (click)="submit()" [disabled]="profileEditForm.invalid" class="w-50" color="primary" disableRipple
+              mat-button>
         Обновить
       </button>
     </div>
