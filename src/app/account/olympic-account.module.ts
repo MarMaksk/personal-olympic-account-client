@@ -15,6 +15,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {AdminPanelComponent} from "./layout/admin-panel/admin-panel.component";
 import {AddSpecializationComponent} from "./layout/admin-panel/add-specialization/add-specialization.component";
+import {
+  UpdateSpecializationComponent
+} from "./layout/admin-panel/update-specialization/update-specialization.component";
 
 
 @NgModule({
@@ -24,7 +27,8 @@ import {AddSpecializationComponent} from "./layout/admin-panel/add-specializatio
     SpecializationsComponent,
     SuccessRegistrationComponent,
     AdminPanelComponent,
-    AddSpecializationComponent],
+    AddSpecializationComponent,
+    UpdateSpecializationComponent],
   imports: [
     CommonModule,
     BrowserModule,

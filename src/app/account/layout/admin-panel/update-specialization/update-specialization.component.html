@@ -1,0 +1,31 @@
+<div>
+  <h2 style="text-align: center">Изменить специальность</h2>
+  <form [formGroup]="updateForm">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Код</mat-label>
+      <input class="input" [maxlength]="12" formControlName="code" matInput type="text">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Название</mat-label>
+      <input class="input" formControlName="name" matInput type="text">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Предмет</mat-label>
+      <input class="input" formControlName="subject" matInput type="text">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Число мест</mat-label>
+      <input class="input" formControlName="countOfPlaces" matInput type="number">
+    </mat-form-field>
+    <div class="row">
+      <button (click)="closeDialog()" class="w-50"
+              mat-button mat-dialog-close disableRipple>
+        Закрыть
+      </button>
+      <button color="primary" class="w-50" [disabled]="updateForm.invalid" (click)="submit()" mat-button
+              disableRipple>
+        Изменить
+      </button>
+    </div>
+  </form>
+</div>

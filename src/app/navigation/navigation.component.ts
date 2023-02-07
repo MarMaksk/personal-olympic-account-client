@@ -19,8 +19,7 @@ export class NavigationComponent implements OnInit {
 
   constructor(private tokenService: TokenStorageService,
               private userService: UserService,
-              private router: Router,
-              private admin: AdminService) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -39,16 +38,5 @@ export class NavigationComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  infoAboutUsers() {
-    this.admin.infoAboutUsers()
-      .subscribe(data => {
-        const blob = new Blob([data], {type: 'application/vnd.ms.excel'});
-        const file = new File([blob], "Список участников олимпиад" + '.xlsx',
-          {type: 'application/vnd.ms.excel'});
-        saveAs(file);
-      }, error => {
-        console.log(error)
-      })
-  }
 
 }

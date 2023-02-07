@@ -40,7 +40,7 @@ export class PersonalDataComponent implements OnInit {
               private fb: FormBuilder,
               private router: Router,
               private tokenService: TokenStorageService) {
-    this.maxDateVal.setFullYear(this.maxDateVal.getFullYear() - 6)
+    this.maxDateVal.setFullYear(this.maxDateVal.getFullYear() - 15)
     this.minDateVal.setFullYear(this.minDateVal.getFullYear() - 18)
   }
 

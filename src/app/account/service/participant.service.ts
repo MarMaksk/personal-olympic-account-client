@@ -27,7 +27,7 @@ export class ParticipantService implements ICRUD<Participant> {
   }
 
   delete(uniqueId: any): Observable<void> {
-    return this.http.delete<void>(uniqueId);
+    return this.http.delete<void>(this.API + uniqueId);
   }
 
   find(uniqueId: any): Observable<Participant> {

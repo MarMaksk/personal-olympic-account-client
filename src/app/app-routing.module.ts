@@ -13,11 +13,11 @@ import {AdminPanelComponent} from "./account/layout/admin-panel/admin-panel.comp
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
-  {path: 'main', component: PersonalDataComponent},
-  {path: 'legal-representative', component: LegalRepresentativeComponent},
-  {path: 'specializations', component: SpecializationsComponent},
-  {path: 'success-registration', component: SuccessRegistrationComponent},
-  {path: 'admin-panel', component: AdminPanelComponent},
+  {path: 'main', component: PersonalDataComponent, canActivate: [AuthGuardService]},
+  {path: 'legal-representative', component: LegalRepresentativeComponent, canActivate: [AuthGuardService]},
+  {path: 'specializations', component: SpecializationsComponent, canActivate: [AuthGuardService]},
+  {path: 'success-registration', component: SuccessRegistrationComponent, canActivate: [AuthGuardService]},
+  {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuardService]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path: '', redirectTo: 'login', pathMatch: 'full'},
 ]

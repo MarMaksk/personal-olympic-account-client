@@ -20,4 +20,8 @@ export class AdminService {
         responseType: "blob"
       });
   }
+
+  deleteAllParticipants(): Observable<any> {
+    return this.http.delete<void>(this.API);
+  }
 }

@@ -53,8 +53,9 @@ export class LoginComponent implements OnInit {
       console.log(data.roles)
       this.notificationService.showSnackBar("Авторизация прошла успешно")
       if (data.roles.indexOf('ROLE_ADMIN') !== -1)
-        console.log('true')
-      this.router.navigate(['/main'])
+        this.router.navigate(['/admin-panel'])
+      else
+        this.router.navigate(['/main'])
     }, error => {
       console.log(error);
       this.notificationService.showSnackBar(error.message)
