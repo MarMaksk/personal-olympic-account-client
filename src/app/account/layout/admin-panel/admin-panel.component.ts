@@ -56,7 +56,7 @@ export class AdminPanelComponent implements OnInit {
       })
   }
 
-  updateFlight(spec: Specialization) {
+  updateSpecialization(spec: Specialization) {
     const dialogFlightEditConfig = new MatDialogConfig();
     dialogFlightEditConfig.width = '50%'
     dialogFlightEditConfig.data = {
@@ -96,8 +96,13 @@ export class AdminPanelComponent implements OnInit {
   delete(element: Specialization) {
     this.specializationService.delete(element.id)
       .subscribe(data => {
-      }, error => this.notification.showSnackBar("Внутренняя ошибка сервера" + error))
+        this.refresh()
+      }, error => {
+        this.notification.showSnackBar("Внутренняя ошибка сервера" + error)
+        this.refresh()
+      })
   }
+
 }
 
 class ExampleDataSource extends DataSource<Specialization> {
