@@ -8,7 +8,7 @@ export interface ICRUD<F> {
 
   update(entity: F): Observable<F>;
 
-  delete(uniqueId: any, any?: any): Observable<void>;
+  delete(uniqueId: any, any?: any): Observable<any>;
 
   find(uniqueId: any, any?: any, any2?: any): Observable<F>;
 

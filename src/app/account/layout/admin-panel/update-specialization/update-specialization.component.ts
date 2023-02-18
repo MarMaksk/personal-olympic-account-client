@@ -48,8 +48,7 @@ export class UpdateSpecializationComponent implements OnInit {
     })
       .subscribe(() => {
         this.notification.showSnackBar("Обновлено")
-        // this.dialogRef.close()
-        window.location.reload()
+        this.closeDialog()
       }, error => this.notification.showSnackBar("Произошла ошибка"))
   }
 

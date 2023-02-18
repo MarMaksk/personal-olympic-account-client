@@ -7,19 +7,19 @@
           <form [formGroup]="personForm">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Фамилия</mat-label>
-              <input [readonly]="participantExist" class="input" formControlName="secondName" matInput type="text">
+              <input [readonly]="registered" class="input" formControlName="secondName" matInput type="text">
             </mat-form-field>
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Имя</mat-label>
-              <input [readonly]="participantExist" class="input" formControlName="firstName" matInput type="text">
+              <input [readonly]="registered" class="input" formControlName="firstName" matInput type="text">
             </mat-form-field>
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Отчество</mat-label>
-              <input [readonly]="participantExist" formControlName="lastName" matInput type="text">
+              <input [readonly]="registered" formControlName="lastName" matInput type="text">
             </mat-form-field>
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Номер телефона</mat-label>
-              <input [maxlength]="13" [readonly]="participantExist" class="input" formControlName="number" matInput
+              <input [maxlength]="13" [readonly]="registered" class="input" formControlName="number" matInput
                      type="text">
             </mat-form-field>
           </form>
@@ -34,17 +34,17 @@
           <form [formGroup]="passportForm">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Серия</mat-label>
-              <input [maxlength]="2" [readonly]="participantExist" class="input" formControlName="series" matInput
+              <input [maxlength]="2" [readonly]="registered" class="input" formControlName="series" matInput
                      type="text">
             </mat-form-field>
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Номер</mat-label>
-              <input [maxlength]="7" [readonly]="participantExist" class="input" formControlName="number" matInput
+              <input [maxlength]="7" [readonly]="registered" class="input" formControlName="number" matInput
                      type="number">
             </mat-form-field>
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Индентификационный номер</mat-label>
-              <input [maxlength]="14" [readonly]="participantExist" formControlName="identityNumber" matInput
+              <input [maxlength]="14" [readonly]="registered" formControlName="identityNumber" matInput
                      type="text">
             </mat-form-field>
           </form>

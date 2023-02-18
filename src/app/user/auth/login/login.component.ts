@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
       else
         this.router.navigate(['/main'])
     }, error => {
-      this.notificationService.showSnackBar(error.message)
+      this.notificationService.showSnackBar("Неверный логин/пароль")
     })
   }
 

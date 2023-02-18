@@ -26,6 +26,10 @@ export class ParticipantService implements ICRUD<Participant> {
     return this.http.put<PersonDTO>(this.API + "representative/" + this.tokenService.getId()?.replace("\"", "")?.replace("\"", ""), entity);
   }
 
+  updateLegalRepresentative(entity: PersonDTO): Observable<PersonDTO> {
+    return this.http.put<PersonDTO>(this.API + "representative/update/" + this.tokenService.getId()?.replace("\"", "")?.replace("\"", ""), entity);
+  }
+
   delete(uniqueId: any): Observable<void> {
     return this.http.delete<void>(this.API + uniqueId);
   }

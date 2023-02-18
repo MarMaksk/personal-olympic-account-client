@@ -45,8 +45,7 @@ export class AddSpecializationComponent implements OnInit {
     })
       .subscribe(() => {
         this.notification.showSnackBar("Добавлено")
-        // this.dialogRef.close()
-        window.location.reload()
+        this.closeDialog()
       }, error => this.notification.showSnackBar("Произошла ошибка"))
   }
 

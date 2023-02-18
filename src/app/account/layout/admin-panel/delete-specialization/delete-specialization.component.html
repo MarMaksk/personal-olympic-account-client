@@ -1,0 +1,16 @@
+<div>
+  <h2 style="text-align: center">Есть зарегистрированные участники</h2>
+  <h4 style="text-align: center">На данную специальность есть зарегистрированные участники. При удалении специальности их данные также будут
+    потеряны.
+    Удалить специальность?</h4>
+  <div class="row" style="text-align: center">
+    <button color="primary" class="w-50" (click)="submit()" mat-button
+            disableRipple>
+      Да
+    </button>
+    <button (click)="closeDialog()" class="w-50"
+            mat-button mat-dialog-close disableRipple>
+      Нет
+    </button>
+  </div>
+</div>

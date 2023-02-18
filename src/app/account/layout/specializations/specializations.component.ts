@@ -24,6 +24,7 @@ export class SpecializationsComponent implements OnInit {
   public policy = false;
   public dataProcessing = false;
   private participantExist = false;
+  registered = false;
 
   constructor(private notification: NotificationService,
               private participantService: ParticipantService,
@@ -46,7 +47,8 @@ export class SpecializationsComponent implements OnInit {
           this.policy = true
           this.dataProcessing = true
         }
-        console.log(this.participantExist + " exist spec")
+        if (data.registered)
+          this.registered = true
         this.isDataLoaded = true;
       }, error => {
         this.isDataLoaded = true;
@@ -55,7 +57,7 @@ export class SpecializationsComponent implements OnInit {
   }
 
   addSpecialization() {
-    if (this.participantExist != true) {
+    if (!this.participantExist) {
       this.specializationsForParticipant.push(this.selectedValue)
       this.specializationsForParticipant = Array.from(new Set(this.specializationsForParticipant));
     }
@@ -68,18 +70,18 @@ export class SpecializationsComponent implements OnInit {
 
   submit(): void {
     if (!this.participantExist) {
-      this.sdoUserService.create()
-        .subscribe(data => {
-        })
       this.participantService.addSpecializations(this.specializationsForParticipant)
         .subscribe(data => {
+            this.sdoUserService.create()
+              .subscribe(data => {
+              })
           },
           error => this.notification.showSnackBar("Произошла ошибка при сохранении данных"))
     }
   }
 
   remove(spec: Specialization) {
-    if (this.participantExist != true)
+    if (!this.participantExist)
       this.specializationsForParticipant = this.specializationsForParticipant.filter(item => item !== spec);
   }
 

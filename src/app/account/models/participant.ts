@@ -9,6 +9,7 @@ export interface Participant {
   address: Address;
   email: string;
   educationalInstitution: string;
+  registered: boolean;
   legalRepresentative?: PersonDTO;
   specializations?: Specialization[];
 }

@@ -18,6 +18,9 @@ import {AddSpecializationComponent} from "./layout/admin-panel/add-specializatio
 import {
   UpdateSpecializationComponent
 } from "./layout/admin-panel/update-specialization/update-specialization.component";
+import {
+  DeleteSpecializationComponent
+} from "./layout/admin-panel/delete-specialization/delete-specialization.component";
 
 
 @NgModule({
@@ -28,7 +31,8 @@ import {
     SuccessRegistrationComponent,
     AdminPanelComponent,
     AddSpecializationComponent,
-    UpdateSpecializationComponent],
+    UpdateSpecializationComponent,
+    DeleteSpecializationComponent],
   imports: [
     CommonModule,
     BrowserModule,

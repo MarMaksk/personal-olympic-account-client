@@ -18,10 +18,11 @@ export class SpecializationService implements ICRUD<Specialization> {
     return this.http.post<Specialization>(this.API, entity);
   }
 
-  delete(uniqueId: any): Observable<any> {
+  delete(uniqueId: any, forced: boolean): Observable<boolean> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("id",uniqueId);
-    return this.http.delete<any>(this.API, {params: queryParams});
+    queryParams = queryParams.append("forced",forced);
+    return this.http.delete<boolean>(this.API, {params: queryParams});
   }
 
   findAll(): Observable<Specialization[]> {

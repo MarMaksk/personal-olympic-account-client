@@ -30,6 +30,7 @@ export class LegalRepresentativeComponent implements OnInit {
   public policy = false;
   public dataProcessing = false;
   public participantExist = false;
+  registered = false;
 
   constructor(private notification: NotificationService,
               private participantService: ParticipantService,
@@ -55,6 +56,8 @@ export class LegalRepresentativeComponent implements OnInit {
           this.policy = true
           this.dataProcessing = true
         }
+        if (data.registered)
+          this.registered = true
         this.personForm = this.createPersonForm()
         this.passportForm = this.createPassportForm()
         this.isDataLoaded = true;
@@ -69,20 +72,26 @@ export class LegalRepresentativeComponent implements OnInit {
   createPersonForm(): FormGroup {
     if (this.person == null)
       return this.fb.group({
-          secondName: ['', Validators.compose([Validators.required])],
-          firstName: ['', Validators.compose([Validators.required])],
-          lastName: ['', Validators.compose([Validators.required])],
+        secondName: ['', Validators.compose([Validators.required,
+          Validators.pattern('^[А-яё]+$')])],
+        firstName: ['', Validators.compose([Validators.required,
+          Validators.pattern('^[А-яё]+$')])],
+        lastName: ['', Validators.compose([Validators.required,
+          Validators.pattern('^[А-яё]+$')])],
           number: ['', Validators.compose([Validators.required,
-            Validators.pattern('^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$')])],
+            Validators.pattern('^(\\+375|80)(29|25|44|33|21)(\\d{3})(\\d{2})(\\d{2})$')])],
         }
       )
     else
       return this.fb.group({
-          secondName: [this.person.secondName, Validators.compose([Validators.required])],
-          firstName: [this.person.firstName, Validators.compose([Validators.required])],
-          lastName: [this.person.lastName, Validators.compose([Validators.required])],
+        secondName: [this.person.secondName, Validators.compose([Validators.required,
+          Validators.pattern('^[А-яё]+$')])],
+        firstName: [this.person.firstName, Validators.compose([Validators.required,
+          Validators.pattern('^[А-яё]+$')])],
+        lastName: [this.person.lastName, Validators.compose([Validators.required,
+          Validators.pattern('^[А-яё]+$')])],
           number: [this.person.number, Validators.compose([Validators.required,
-            Validators.pattern('^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$')])],
+            Validators.pattern('^(\\+375|80)(29|25|44|33|21)(\\d{3})(\\d{2})(\\d{2})$')])],
         }
       )
   }
@@ -111,28 +120,40 @@ export class LegalRepresentativeComponent implements OnInit {
   }
 
   submit(): void {
-    if (!this.participantExist) {
+    if (!this.registered) {
       let passport: Passport
       passport = {
+        id: this.participantExist ? this.person.passport.id : null,
         series: this.passportForm.value.series,
         number: this.passportForm.value.number,
         identityNumber: this.passportForm.value.identityNumber
       }
       this.person = {
+        id: this.participantExist ? this.person.id : null,
         firstName: this.personForm.value.firstName,
         secondName: this.personForm.value.secondName,
         lastName: this.personForm.value.lastName,
         passport: passport,
         number: this.personForm.value.number
       }
-      this.participantService.addLegalRepresentative(this.person)
-        .subscribe(() => {
-            this.router.navigate(['/specializations']);
-          },
-          error => {
-            console.log(error)
-            this.notification.showSnackBar("Произошла ошибка при сохранении данных")
-          })
+      if (this.participantExist)
+        this.participantService.updateLegalRepresentative(this.person)
+          .subscribe(() => {
+              this.router.navigate(['/specializations']);
+            },
+            error => {
+              console.log(error)
+              this.notification.showSnackBar("Произошла ошибка при сохранении данных")
+            })
+      else
+        this.participantService.addLegalRepresentative(this.person)
+          .subscribe(() => {
+              this.router.navigate(['/specializations']);
+            },
+            error => {
+              console.log(error)
+              this.notification.showSnackBar("Произошла ошибка при сохранении данных")
+            })
     }
   }
 }

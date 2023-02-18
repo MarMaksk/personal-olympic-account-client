@@ -44,7 +44,7 @@ export class RegistrationComponent implements OnInit {
       this.router.navigate(['/main'])
       // window.location.reload();
     }, error => {
-      this.notificationService.showSnackBar("Логин и пароль должны содержать минимум 4 символа")
+      this.notificationService.showSnackBar("Данный логин уже зарегистрирован")
     })
   }
 

@@ -10,6 +10,7 @@ import {AddSpecializationComponent} from "./add-specialization/add-specializatio
 import {AdminService} from "../../service/admin.service";
 import {UpdateSpecializationComponent} from "./update-specialization/update-specialization.component";
 import {saveAs} from "file-saver";
+import {DeleteSpecializationComponent} from "./delete-specialization/delete-specialization.component";
 
 @Component({
   templateUrl: './admin-panel.component.html',
@@ -57,18 +58,24 @@ export class AdminPanelComponent implements OnInit {
   }
 
   updateSpecialization(spec: Specialization) {
-    const dialogFlightEditConfig = new MatDialogConfig();
-    dialogFlightEditConfig.width = '50%'
-    dialogFlightEditConfig.data = {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '50%'
+    dialogConfig.data = {
       specialization: spec
     }
-    this.dialog.open(UpdateSpecializationComponent, dialogFlightEditConfig)
+    this.dialog.open(UpdateSpecializationComponent, dialogConfig).afterClosed()
+      .subscribe(res => {
+        this.refresh()
+      })
   }
 
   addSpecialization() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%'
-    this.dialog.open(AddSpecializationComponent, dialogConfig)
+    this.dialog.open(AddSpecializationComponent, dialogConfig).afterClosed()
+      .subscribe(res => {
+        this.refresh()
+      })
   }
 
   removeData() {
@@ -94,9 +101,21 @@ export class AdminPanelComponent implements OnInit {
   }
 
   delete(element: Specialization) {
-    this.specializationService.delete(element.id)
+    this.specializationService.delete(element.id, false)
       .subscribe(data => {
-        this.refresh()
+        if (data == false) {
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.width = '50%'
+          dialogConfig.data = {
+            specialization: element
+          }
+          this.dialog.open(DeleteSpecializationComponent, dialogConfig).afterClosed()
+            .subscribe(res => {
+              this.refresh()
+            })
+        } else {
+          this.refresh()
+        }
       }, error => {
         this.notification.showSnackBar("Внутренняя ошибка сервера" + error)
         this.refresh()

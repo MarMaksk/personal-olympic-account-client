@@ -24,7 +24,7 @@
         <h3>Количество мест: {{selectedValue.countOfPlaces}}</h3>
       </mat-card-content>
       <mat-card-actions>
-        <div class="center">
+        <div class="center" *ngIf="!registered">
           <button (click)="addSpecialization()" class="w-50" color="primary" disableRipple extended
                   mat-fab>
             Добавить
@@ -45,7 +45,7 @@
             <h3>Учебный предмет по специальности: {{spec.subject}}</h3>
             <h3>Количество мест: {{spec.countOfPlaces}}</h3>
             <div class="center">
-              <button (click)="remove(spec)" class="w-50" color="primary" disableRipple extended
+              <button *ngIf="!registered" (click)="remove(spec)" class="w-50" color="primary" disableRipple extended
                       mat-fab>
                 Убрать
               </button>
